@@ -1,5 +1,5 @@
 #这是聊天主文件
-from db_utils import get_recent_conversation,insert_message
+from db_utils import insert_message,get_recent_conversation_cache
 from ai_utils import ask_luoli
 
 USER_ID = '宿海'
@@ -18,7 +18,7 @@ def main():
         if not user_input:                                                       #若输入为空，重新循环
             continue                                                             #以上为聊天的循环
 
-        history = get_recent_conversation(USER_ID)
+        history = get_recent_conversation_cache(USER_ID)
         #print(f"调试: 取到{len(history)}条历史")                                   #这里类似的都是调试时打印有关数据情况
         context = ""
         for speaker,content in history:
@@ -28,7 +28,7 @@ def main():
                                                                                  #到这里是调用历史，拼接成对话
 
         #print("调试:正在调用 ask_luoli...")
-        reply = ask_luoli(prompt)                                                #到这里是调用回复
+        reply = ask_luoli(prompt)                                                 #到这里是调用回复
         #print(f"调试: ask_luoli返回了，repr(reply) = {repr(reply)}")
 
         print(f"洛璃: {reply}")                                                   #输出回复
